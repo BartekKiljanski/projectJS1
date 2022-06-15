@@ -43,7 +43,8 @@ main {
   align-items: flex-start;
 }
 
-h2.title {
+h2.title,
+.budget-title {
   margin-bottom: 30px;
   text-align: center;
   text-transform: uppercase;

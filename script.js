@@ -1,3 +1,5 @@
+// Użytkownik powinien mieć również możliwość poprawienia danej pozycji pod kątem nazwy oraz kwoty. Powinna być również możliwość usunięcia danej pozycji. Walutę przyjmujemy jako PLN. Jeżeli suma przychodów jest większa od wydatków to aplikacja powinna pokazywać komunikat: “Możesz jeszcze wydać XXX złotych”. Jeżeli różnica wyniesie 0, komunikat powinien brzmieć: “Bilans wynosi zero”. Jeżeli wydatków jest więcej, komunikat powinien wyglądać tak: “Bilans jest ujemny. Jesteś na minusie XXX złotych”.
+
 const incomeSection = document.querySelector(".income-area");
 const expensesSection = document.querySelector(".expenses-area");
 const availableMoney = document.querySelector(".available-money");
@@ -16,11 +18,13 @@ const deleteAllBtn = document.querySelector(".delete-all");
 const lightStyleBtn = document.querySelector(".light");
 const darkStyleBtn = document.querySelector(".dark");
 
+const budgetTitle = document.querySelector(".budget-title");
+
 let root = document.documentElement;
 let ID = 0;
 let categoryIcon;
 let selectedCategory;
-let moneyArr = [0];
+let moneyArr = [];
 
 const showPanel = () => {
   addTransactionPanel.style.display = "flex";
@@ -61,8 +65,11 @@ const createNewTransaction = () => {
         </p>
         <p class="transaction-amount">
         ${amountInput.value}zł 
-        <button class="delete" onclick="deleteTransatcion(${ID})"><i class="fas fa-times"></i></button>
+        
         </p>
+		<button class="delete" onclick="deleteTransatcion(${ID})"><i class="fas fa-times"></i></button>
+		<button class="delete" onclick="editTransatcion(${ID})">EDIT</i></button>
+		
     `;
 
   amountInput.value > 0
@@ -94,7 +101,15 @@ const checkCategory = (transaction) => {
 
 const countMoney = (money) => {
   const newMoney = money.reduce((a, b) => a + b);
+
   availableMoney.textContent = `${newMoney}zł`;
+  if (newMoney < 0) {
+    return (budgetTitle.textContent = `Bilans jest ujemny. Jesteś na minusie:`);
+  }
+  if (newMoney > 0) {
+    return (budgetTitle.textContent = `Możesz jeszcze wydać:`);
+  }
+  budgetTitle.textContent = `Bilans wynosi:`;
 };
 
 const deleteTransatcion = (id) => {
@@ -110,6 +125,21 @@ const deleteTransatcion = (id) => {
     ? incomeSection.removeChild(transactionToDelete)
     : expensesSection.removeChild(transactionToDelete);
   countMoney(moneyArr);
+};
+const editTransatcion = (id) => {
+  const transactionToEdit = document.getElementById(id);
+  //   const transactionAmount = parseFloat(
+  //     transactionToEdit.childNodes[3].innerText
+  //   );
+  //   const indexOfTransaction = moneyArr.indexOf(transactionAmount);
+
+  //   moneyArr.splice(indexOfTransaction, 1);
+
+  //   transactionToDelete.classList.contains("income")
+  //     ? incomeSection.removeChild(transactionToDelete)
+  //     : expensesSection.removeChild(transactionToDelete);
+  //   countMoney(moneyArr);
+  console.log(id);
 };
 
 const deleteAllTransactions = () => {
