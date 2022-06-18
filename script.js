@@ -64,11 +64,11 @@ const createNewTransaction = () => {
         ${categoryIcon} ${nameInput.value}
         </p>
         <p class="transaction-amount">
-        ${amountInput.value}zł 
+        ${amountInput.value} 
         
         </p>
 		<button class="delete" onclick="deleteTransatcion(${ID})"><i class="fas fa-times"></i></button>
-		<button class="delete" onclick="editTransatcion(${ID})">EDIT</i></button>
+		<button class="edit" onclick="editTransatcion(${ID})">EDIT</i></button>
 		
     `;
 
@@ -128,6 +128,37 @@ const deleteTransatcion = (id) => {
 };
 const editTransatcion = (id) => {
   const transactionToEdit = document.getElementById(id);
+  const transactionName = transactionToEdit.querySelector(".transaction-name");
+  const transactionAmount = transactionToEdit.querySelector(
+    ".transaction-amount"
+  );
+
+  transactionName.setAttribute("contenteditable", true);
+  transactionAmount.setAttribute("contenteditable", true);
+  const editButton = transactionToEdit.querySelector(".edit");
+  transactionToEdit.removeChild(editButton);
+
+  const acceptButton = document.createElement("button");
+  acceptButton.innerHTML = "ACCEPT";
+  transactionToEdit.appendChild(acceptButton);
+
+  acceptButton.addEventListener("click", () => {
+    const newAmount = transactionAmount.textContent;
+    if (isNaN(newAmount)) {
+      alert("Błędna wartość , akceptuje tylko liczby ");
+    } else {
+      transactionName.setAttribute("contenteditable", false);
+      transactionAmount.setAttribute("contenteditable", false);
+      moneyArr[id] = newAmount;
+      countMoney(moneyArr);
+      transactionToEdit.removeChild(acceptButton);
+      transactionToEdit.insertAdjacentHTML(
+        "beforeend",
+        `<button class="edit" onclick="editTransatcion(${id})">EDIT</i></button>`
+      );
+    }
+  });
+
   //   const transactionAmount = parseFloat(
   //     transactionToEdit.childNodes[3].innerText
   //   );
