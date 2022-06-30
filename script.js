@@ -1,5 +1,3 @@
-// Użytkownik powinien mieć również możliwość poprawienia danej pozycji pod kątem nazwy oraz kwoty. Powinna być również możliwość usunięcia danej pozycji. Walutę przyjmujemy jako PLN. Jeżeli suma przychodów jest większa od wydatków to aplikacja powinna pokazywać komunikat: “Możesz jeszcze wydać XXX złotych”. Jeżeli różnica wyniesie 0, komunikat powinien brzmieć: “Bilans wynosi zero”. Jeżeli wydatków jest więcej, komunikat powinien wyglądać tak: “Bilans jest ujemny. Jesteś na minusie XXX złotych”.
-
 const incomeSection = document.querySelector(".income-area");
 const expensesSection = document.querySelector(".expenses-area");
 const availableMoney = document.querySelector(".available-money");
@@ -65,7 +63,6 @@ const createNewTransaction = () => {
         </p>
         <p class="transaction-amount">
         ${amountInput.value} 
-        
         </p>
 		<button class="delete" onclick="deleteTransatcion(${ID})"><i class="fas fa-times"></i></button>
 		<button class="edit" onclick="editTransatcion(${ID})">EDIT</i></button>
@@ -149,7 +146,8 @@ const editTransatcion = (id) => {
     } else {
       transactionName.setAttribute("contenteditable", false);
       transactionAmount.setAttribute("contenteditable", false);
-      moneyArr[id] = newAmount;
+
+      moneyArr[0] = newAmount;
       countMoney(moneyArr);
       transactionToEdit.removeChild(acceptButton);
       transactionToEdit.insertAdjacentHTML(
@@ -158,19 +156,6 @@ const editTransatcion = (id) => {
       );
     }
   });
-
-  //   const transactionAmount = parseFloat(
-  //     transactionToEdit.childNodes[3].innerText
-  //   );
-  //   const indexOfTransaction = moneyArr.indexOf(transactionAmount);
-
-  //   moneyArr.splice(indexOfTransaction, 1);
-
-  //   transactionToDelete.classList.contains("income")
-  //     ? incomeSection.removeChild(transactionToDelete)
-  //     : expensesSection.removeChild(transactionToDelete);
-  //   countMoney(moneyArr);
-  console.log(id);
 };
 
 const deleteAllTransactions = () => {
@@ -198,16 +183,3 @@ saveBtn.addEventListener("click", checkForm);
 deleteAllBtn.addEventListener("click", deleteAllTransactions);
 lightStyleBtn.addEventListener("click", changeStyleToLight);
 darkStyleBtn.addEventListener("click", changeStyleToDark);
-
-const body = document.querySelector("body");
-const toggle = document.querySelector("#toggle");
-const sunIcon = document.querySelector(".toggle .bxs-sun");
-const moonIcon = document.querySelector(".toggle .bx-moon");
-
-toggle.addEventListener("change", () => {
-  body.classList.toggle("dark");
-  sunIcon.className =
-    sunIcon.className == "bx bxs-sun" ? "bx bx-sun" : "bx bxs-sun";
-  moonIcon.className =
-    moonIcon.className == "bx bxs-moon" ? "bx bx-moon" : "bx bxs-moon";
-});
