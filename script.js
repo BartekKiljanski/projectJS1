@@ -63,6 +63,7 @@ const createNewTransaction = () => {
         </p>
         <p class="transaction-amount">
         ${amountInput.value} 
+        
         </p>
 		<button class="delete" onclick="deleteTransatcion(${ID})"><i class="fas fa-times"></i></button>
 		<button class="edit" onclick="editTransatcion(${ID})">EDIT</i></button>
@@ -97,7 +98,7 @@ const checkCategory = (transaction) => {
 };
 
 const countMoney = (money) => {
-  const newMoney = money.reduce((a, b) => a + b);
+  const newMoney = money.reduce((a, b) => Number(a) + Number(b));
 
   availableMoney.textContent = `${newMoney}zł`;
   if (newMoney < 0) {
@@ -147,7 +148,7 @@ const editTransatcion = (id) => {
       transactionName.setAttribute("contenteditable", false);
       transactionAmount.setAttribute("contenteditable", false);
 
-      moneyArr[0] = newAmount;
+      moneyArr[id] = newAmount;
       countMoney(moneyArr);
       transactionToEdit.removeChild(acceptButton);
       transactionToEdit.insertAdjacentHTML(
