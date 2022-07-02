@@ -85,7 +85,6 @@ const createNewTransaction = () => {
 };
 
 const selectCategory = () => {
-  console.log(selectCategory);
   selectedCategory = categorySelect.options[categorySelect.selectedIndex].text;
 
   if (document.getElementById("category").value == "shopping") {
@@ -96,9 +95,6 @@ const selectCategory = () => {
 };
 
 const checkCategory = (transaction) => {
-  console.log(checkCategory);
-  console.log(transaction);
-
   switch (transaction) {
     case "[ + ] Przychód":
       categoryIcon = '<i class="fas fa-money-bill-wave"></i>';
