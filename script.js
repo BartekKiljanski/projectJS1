@@ -57,7 +57,9 @@ const createNewTransaction = () => {
   const newTransaction = document.createElement("div");
   newTransaction.classList.add("transaction");
   newTransaction.setAttribute("id", ID);
-  checkCategory(selectedCategory);
+  const category = checkCategory(selectedCategory);
+
+  const isIncome = category === "income";
 
   newTransaction.innerHTML = `
         <p class="transaction-name">
@@ -72,12 +74,16 @@ const createNewTransaction = () => {
 		
     `;
 
-  amountInput.value > 0
+  isIncome
     ? incomeSection.appendChild(newTransaction) &&
       newTransaction.classList.add("income")
     : expensesSection.appendChild(newTransaction) &&
       newTransaction.classList.add("expense");
-  moneyArr.push(parseFloat(amountInput.value));
+
+  const properValueToPushToMoney = isIncome
+    ? parseFloat(amountInput.value)
+    : parseFloat(-amountInput.value);
+  moneyArr.push(properValueToPushToMoney);
   countMoney(moneyArr);
   closePanel();
   ID++;
@@ -86,22 +92,16 @@ const createNewTransaction = () => {
 
 const selectCategory = () => {
   selectedCategory = categorySelect.options[categorySelect.selectedIndex].text;
-
-  if (document.getElementById("category").value == "shopping") {
-    alert(
-      "Pamiętaj ,że po wybraniu kategori Wydatki musisz dodać '-' przed kwotą np: -10. W innym wypadku kwota automatycznie będzie przypisana do Przychodów "
-    );
-  }
 };
 
 const checkCategory = (transaction) => {
   switch (transaction) {
     case "[ + ] Przychód":
       categoryIcon = '<i class="fas fa-money-bill-wave"></i>';
-      break;
+      return "income";
     case "[ - ] Wydatki":
       categoryIcon = '<i class="fas fa-cart-arrow-down"></i>';
-      break;
+      return "expense";
   }
 };
 

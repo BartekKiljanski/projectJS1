@@ -58,7 +58,7 @@
 
         <label for="amount">Kwota:</label>
         <small>(podaj kwotę transakcji, jeśli dodajesz wydatek, postaw znak minusa na początku kwoty) </small>
-        <input type="number" id="amount" >
+        <input type="number" id="amount" min="0" oninput="validity.valid||(value='');">
 
         <label for="category">Wybierz kategorię:</label>
         
