@@ -62,18 +62,28 @@ const createNewTransaction = () => {
   const isIncome = category === "income";
 
   newTransaction.innerHTML = `
-        <p class="transaction-name">
-        ${categoryIcon} ${nameInput.value}
-        </p>
-        <p class="transaction-amount">
-        ${amountInput.value} 
-        
-        </p>
-		<button class="delete" onclick="deleteTransatcion(${ID})"><i class="fas fa-times"></i></button>
-		<button class="edit" onclick="editTransatcion(${ID})">EDIT</i></button>
-		
-    `;
+  <p class="transaction-name">
+  ${categoryIcon} ${nameInput.value}
+  </p>
+  <p class="transaction-amount">
+  ${amountInput.value} 
+  
+  </p>
+  <button class="delete" onclick="deleteTransatcion(${ID})"><i class="fas fa-times"></i></button>
+  <button class="edit" onclick="editTransatcion(${ID})">EDIT</i></button>
+  
+`;
 
+  const selectCategory = () => {
+    selectedCategory =
+      categorySelect.options[categorySelect.selectedIndex].text;
+
+    if (document.getElementById("category").value == "shopping") {
+      alert(
+        "Pamiętaj ,że po wybraniu kategori Wydatki musisz dodać '-' przed kwotą np: -10.  W innym wypadku kwota automatycznie będzie przypisana do Przychodów "
+      );
+    }
+  };
   isIncome
     ? incomeSection.appendChild(newTransaction) &&
       newTransaction.classList.add("income")
@@ -89,7 +99,6 @@ const createNewTransaction = () => {
   ID++;
   clearInputs();
 };
-
 const selectCategory = () => {
   selectedCategory = categorySelect.options[categorySelect.selectedIndex].text;
 };
