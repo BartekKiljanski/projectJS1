@@ -17,6 +17,8 @@ const lightStyleBtn = document.querySelector(".light");
 const darkStyleBtn = document.querySelector(".dark");
 
 const budgetTitle = document.querySelector(".budget-title");
+const alertPlaceholder = document.getElementById("liveAlertPlaceholder");
+const alertTrigger = document.getElementById("liveAlertBtn");
 
 let root = document.documentElement;
 let ID = 0;
@@ -83,15 +85,25 @@ const createNewTransaction = () => {
 };
 
 const selectCategory = () => {
+  console.log(selectCategory);
   selectedCategory = categorySelect.options[categorySelect.selectedIndex].text;
+
+  if (document.getElementById("category").value == "shopping") {
+    alert(
+      "Pamiętaj ,że po wybraniu kategori Wydatki musisz dodać '-' przed kwotą np: -10 "
+    );
+  }
 };
 
 const checkCategory = (transaction) => {
+  console.log(checkCategory);
+  console.log(transaction);
+
   switch (transaction) {
     case "[ + ] Przychód":
       categoryIcon = '<i class="fas fa-money-bill-wave"></i>';
       break;
-    case "[ - ] Zakupy":
+    case "[ - ] Wydatki":
       categoryIcon = '<i class="fas fa-cart-arrow-down"></i>';
       break;
   }
