@@ -89,7 +89,7 @@ const selectCategory = () => {
 
   if (document.getElementById("category").value == "shopping") {
     alert(
-      "Pamiętaj ,że po wybraniu kategori Wydatki musisz dodać '-' przed kwotą np: -10 "
+      "Pamiętaj ,że po wybraniu kategori Wydatki musisz dodać '-' przed kwotą np: -10. W innym wypadku kwota automatycznie będzie przypisana do Przychodów "
     );
   }
 };
